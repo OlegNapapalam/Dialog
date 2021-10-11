@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import kotlinx.android.synthetic.main.dialog_do_you_like.*
+import com.example.dialog.databinding.DialogDoYouLikeBinding
 
 class DialogDoYouLike : DialogFragment() {
+    private var _binding: DialogDoYouLikeBinding? = null
+    private val binding get() = _binding!!
 
     private var listenerNo: ((Boolean) -> Unit)? = null
 
@@ -18,26 +20,28 @@ class DialogDoYouLike : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.dialog_do_you_like, null)
+        _binding = DialogDoYouLikeBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tvYes.setOnClickListener {
+        binding.tvYes.setOnClickListener {
             dismiss()
         }
 
-        tvNo.setOnClickListener {
+        binding.tvNo.setOnClickListener {
             listenerNo?.invoke(true)
             dismiss()
         }
 
-        tvLeaveIt.setOnClickListener {
+        binding.tvLeaveIt.setOnClickListener {
             Toast.makeText(context, "LEAVE IT", Toast.LENGTH_SHORT).show()
         }
 
-        tvAskLater.setOnClickListener {
+        binding.tvAskLater.setOnClickListener {
             Toast.makeText(context, "ASK LATER", Toast.LENGTH_SHORT).show()
         }
 
@@ -46,6 +50,12 @@ class DialogDoYouLike : DialogFragment() {
     fun initListenerNo(data: (Boolean) -> Unit) {
         listenerNo = data
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
 
     companion object {
         fun getInstance(): DialogDoYouLike {

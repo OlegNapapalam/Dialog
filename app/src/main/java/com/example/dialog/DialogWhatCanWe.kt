@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import kotlinx.android.synthetic.main.dialog_what_can_we.*
+import com.example.dialog.databinding.DialogWhatCanWeBinding
 
 
 class DialogWhatCanWe : DialogFragment() {
+    private var _binding: DialogWhatCanWeBinding? = null
+    private val binding get() = _binding!!
 
     private var listenerConfirm: ((Boolean) -> Unit)? = null
 
@@ -18,23 +20,24 @@ class DialogWhatCanWe : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        return inflater.inflate(R.layout.dialog_what_can_we, null)
+        _binding = DialogWhatCanWeBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tvConfirm.setOnClickListener {
+        binding.tvConfirm.setOnClickListener {
             listenerConfirm?.invoke(true)
             dismiss()
         }
 
-        tvStepBack.setOnClickListener {
+        binding.tvStepBack.setOnClickListener {
             Toast.makeText(context, "tvStepBack", Toast.LENGTH_SHORT).show()
         }
 
-        tvCancel.setOnClickListener {
+        binding.tvCancel.setOnClickListener {
             Toast.makeText(context, "tvCancel", Toast.LENGTH_SHORT).show()
         }
 
@@ -42,6 +45,11 @@ class DialogWhatCanWe : DialogFragment() {
 
     fun initListenerConfirm(data: (Boolean) -> Unit) {
         listenerConfirm = data
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     companion object {

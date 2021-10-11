@@ -1,21 +1,23 @@
 package com.example.dialog
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.appcompat.app.AppCompatActivity
+import com.example.dialog.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        tvGo.setOnClickListener {
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        binding.tvGo.setOnClickListener {
             dialogDoYouLike()
         }
     }
-
 
     fun dialogDoYouLike() {
         val dialog = DialogDoYouLike.getInstance()
@@ -25,7 +27,6 @@ class MainActivity : AppCompatActivity() {
             dialogWhatCanWe()
         }
     }
-
 
     fun dialogWhatCanWe() {
         val dialog = DialogWhatCanWe.getInstance()

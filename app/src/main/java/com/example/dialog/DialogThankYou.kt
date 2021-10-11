@@ -6,26 +6,35 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import kotlinx.android.synthetic.main.dialog_thank_you.*
+import com.example.dialog.databinding.DialogThankYouBinding
 
 class DialogThankYou : DialogFragment() {
+
+    private var _binding: DialogThankYouBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        return inflater.inflate(R.layout.dialog_thank_you, null)
+        _binding = DialogThankYouBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tvClose.setOnClickListener {
+        binding.tvClose.setOnClickListener {
             Toast.makeText(context, "tvClose", Toast.LENGTH_SHORT).show()
             dismiss()
         }
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 
